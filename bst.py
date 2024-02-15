@@ -47,8 +47,6 @@ class BST:
 
     # Funzione ricorsiva di supporto per la ricerca di un nodo
     def _getNode(self, currentNode, found_nodes,  key, iterations_counter):
-
-
         if (currentNode is None):
             return
         

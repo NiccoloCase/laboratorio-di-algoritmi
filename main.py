@@ -1,7 +1,6 @@
 from bst import BST
 from bst_flag import BST_FLAG
 from plot_tree import plot_tree
-
 from timeit import default_timer as timer
 import sys
 import matplotlib.pyplot as plt
@@ -16,7 +15,7 @@ def random_key(max=20):
     
 
 def test_insertion():
-    n = 30000
+    n = 3000
 
     tree = BST()
 
@@ -36,16 +35,53 @@ def test_insertion():
         end = timer()
         search_result[i] = end - start
 
-
-
     # plot_results(insert_result)
     plot_results(search_result)
     
 
 
+def test_bst_flag():
+    n = 100000
+
+    tree = BST_FLAG()
+
+    insert_result = {}
+    search_result = {}
+
+    for i in range(n):
+        start = timer()
+
+        key = 1
+        tree.insert(key)
+        end = timer()
+        insert_result[i] = end - start
+
+        start = timer()
+        tree.get(key)
+        end = timer()
+        search_result[i] = end - start
+
+
+
+    #plot_tree(tree)
+    #plot_multiple_results(insert_result, search_result)
+    plot_results(insert_result)
+    #plot_results(search_result)
+    
 
     
 
+
+    
+def plot_multiple_results(results_1, results_2):
+    x = list(results_1.keys())
+    y1 = list(results_1.values())
+    y2 = list(results_2.values())
+
+    plt.plot(x, y1, label="1")
+    plt.plot(x, y2, label="2")
+    plt.legend()
+    plt.show()
 
 
 def plot_results(result):
@@ -53,7 +89,8 @@ def plot_results(result):
     x = list(result.keys())
     y = list(result.values())
 
-    plt.plot(x, y)
+
+    plt.plot(x, y, marker='o')
     plt.show()
 
 
@@ -80,16 +117,30 @@ def test_tree_visualization():
     print([node.key for node in nodes])
     
     plot_tree(tree)
-
-
-
-    
+ 
 
 
 
 def main():
     #test_tree_visualization()
-    test_insertion()
+    #test_insertion()
+    #test_bst_flag()
+
+
+
+
+    tree = BST()   
+
+    tree.insert(12)
+    tree.insert(1)
+    tree.insert(3)
+    tree.insert(17)
+    tree.insert(11)
+    tree.insert(0)
+    tree.insert(3)
+    tree.insert(20)
+
+    plot_tree(tree)
 
 if __name__ == "__main__":
    main()

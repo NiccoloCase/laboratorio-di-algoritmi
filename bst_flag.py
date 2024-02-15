@@ -52,7 +52,7 @@ class BST_FLAG:
                 else:
                     currentNode.right = Node(key)
         
-
+    
         if (key < currentNode.key):
             if (currentNode.left):
                 self._insertNode(currentNode.left, key)
@@ -94,3 +94,31 @@ class BST_FLAG:
         _inorder(self.root)
 
 
+    def get(self, key):
+        found_nodes = []
+        iterations_counter = [0]  # Utilizziamo una lista per passare il riferimento al contatore
+        self._getNode(self.root, found_nodes, key, iterations_counter)
+        print("Iterazioni: ", iterations_counter[0])
+        return found_nodes
+
+    # Funzione ricorsiva di supporto per la ricerca di un nodo
+    def _getNode(self, currentNode, found_nodes,  key, iterations_counter):
+        if (currentNode is None):
+            return
+        
+        iterations_counter[0] += 1
+
+        if (key == currentNode.key):
+            found_nodes.append(currentNode)
+            
+            # Abbiamo trovato il nodo, ma dobbiamo continuare la ricerca nel sottoalbero sinistro
+            # per cercare eventuali nodi con lo stesso valore
+
+            if (currentNode.left is not None):
+                self._getNode(currentNode.left, found_nodes, key, iterations_counter)
+
+
+        elif (key < currentNode.key):
+            return self._getNode(currentNode.left, found_nodes, key, iterations_counter)
+        else:
+            return self._getNode(currentNode.right, found_nodes, key, iterations_counter)   
