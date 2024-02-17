@@ -61,7 +61,7 @@ def generate_generic_bst_img():
 def generate_bst_flag_img():
     tree = BST_FLAG()   
 
-    for i in range(1, 100):
+    for i in range(1, 64):
         tree.insert(1)
 
     plot_tree(tree)
@@ -70,4 +70,4 @@ def generate_bst_flag_img():
 
 
 if __name__ == "__main__":
-   generate_normal_implementation_img_3()
+   generate_bst_flag_img()

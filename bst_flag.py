@@ -36,25 +36,23 @@ class BST_FLAG:
         self.insert_iterations_count += 1
         
         if(currentNode.key == key):
-            if(currentNode.flag == False):
-                if (currentNode.left): self._insertNode(currentNode.left, key)
-                else: currentNode.left = Node(key)
-            else:
-                if (currentNode.right): self._insertNode(currentNode.right, key)
-                else: currentNode.right = Node(key)
+            if(currentNode.flag): self._insert_right(currentNode, key)
+            else: self._insert_left(currentNode, key)
 
-            currentNode.flag = not currentNode.flag
+            currentNode.flag = not currentNode.flag # Alterna il flag
     
-        if (key < currentNode.key):
-            if (currentNode.left):
-                self._insertNode(currentNode.left, key)
-            else:
-                currentNode.left = Node(key)
-        elif (key > currentNode.key):
-            if (currentNode.right):
-                self._insertNode(currentNode.right, key)
-            else:
-                currentNode.right = Node(key)
+        if (key < currentNode.key): self._insert_left (currentNode, key)
+        elif (key > currentNode.key): self._insert_right(currentNode, key)
+
+    # Funzione di supporto per l'inserimento di un nodo a sinistra
+    def _insert_left(self, currentNode, key):
+        if (currentNode.left): self._insertNode(currentNode.left, key)
+        else: currentNode.left = Node(key)
+
+    # Funzione di supporto per l'inserimento di un nodo a destra
+    def _insert_right(self, currentNode, key):
+        if (currentNode.right): self._insertNode(currentNode.right, key)
+        else: currentNode.right = Node(key)
                 
     # Cerca un nodo nell'albero
     # Restituisce True se lo trova, False altrimenti
