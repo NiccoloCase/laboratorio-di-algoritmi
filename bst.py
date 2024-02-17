@@ -9,6 +9,7 @@ class Node:
 class BST:
     def __init__(self):
         self.root = None
+        insert_iterations_count = 0
 
     # Imposta la radice dell'albero
     def setRoot(self, key):
@@ -16,15 +17,15 @@ class BST:
 
     # Inserisce un nodo nell'albero
     def insert(self, key):
-        if (self.root is None):
-            self.setRoot(key)
-        else:
-            self._insertNode(self.root, key)
+        self.insert_iterations_count = 0
+        if (self.root is None): self.setRoot(key)
+        else: self._insertNode(self.root, key)
+        print("Iterazioni per inserimento: ", self.insert_iterations_count)
+        return self.insert_iterations_count
 
     # Funzione di supporto per l'inserimento di un nodo
-    # Presuppone che l'albero non sia vuoto (no inserimento nella radice)
     def _insertNode(self, currentNode, key):
-        
+        self.insert_iterations_count += 1
         if (key <= currentNode.key):
             if (currentNode.left):
                 self._insertNode(currentNode.left, key)

@@ -3,27 +3,21 @@ from random import randint
 
 # NODO DI UN ALBERO BINARIO DI RICERCA
 class Node:
-   def __init__(self, key):
-      self.key = key
-      self.left = None
-      self.right = None
-   def get(self):
-      return self.key
-   def set(self, key):
-      self.key = key
-   def getChildren(self):
-      children = []
-      if (self.left != None):
-         children.append(self.left)
-      if (self.right != None):
-         children.append(self.right)
-      return children
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+        self.flag = False
+
+   
         
 
 # ALBERO BINARIO DI RICERCA
 class BST_FLAG:
     def __init__(self):
         self.root = None
+        self.insert_iterations_count = 0
+
 
     # Imposta la radice dell'albero
     def setRoot(self, key):
@@ -31,27 +25,25 @@ class BST_FLAG:
 
     # Inserisce un nodo nell'albero
     def insert(self, key):
-        if (self.root is None):
-            self.setRoot(key)
-        else:
-            self._insertNode(self.root, key)
+        self.insert_iterations_count = 0
+        if (self.root is None): self.setRoot(key)
+        else: self._insertNode(self.root, key)
+        print("Iterazioni per inserimento: ", self.insert_iterations_count)
+        return self.insert_iterations_count
 
     # Funzione di supporto per l'inserimento di un nodo
-    # Presuppone che l'albero non sia vuoto (no inserimento nella radice)
     def _insertNode(self, currentNode, key):
-        if(currentNode.key == key):
-            # decide casualmente se inserire a sinistra o a destra
-            if(randint(0, 1) == 0):
-                if (currentNode.left):
-                    self._insertNode(currentNode.left, key)
-                else:
-                    currentNode.left = Node(key)
-            else:
-                if (currentNode.right):
-                    self._insertNode(currentNode.right, key)
-                else:
-                    currentNode.right = Node(key)
+        self.insert_iterations_count += 1
         
+        if(currentNode.key == key):
+            if(currentNode.flag == False):
+                if (currentNode.left): self._insertNode(currentNode.left, key)
+                else: currentNode.left = Node(key)
+            else:
+                if (currentNode.right): self._insertNode(currentNode.right, key)
+                else: currentNode.right = Node(key)
+
+            currentNode.flag = not currentNode.flag
     
         if (key < currentNode.key):
             if (currentNode.left):

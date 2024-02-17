@@ -5,142 +5,108 @@ from timeit import default_timer as timer
 import sys
 import matplotlib.pyplot as plt
 import random
+from results_saver import save_results
 
 
-sys.setrecursionlimit(500000)
+sys.setrecursionlimit(500000000)
 
 
 def random_key(max=20):
     return random.randint(0, max)
     
 
-def test_insertion():
-    n = 3000
+def test_bst():
+    n = 100000
 
     tree = BST()
 
     insert_result = {}
     search_result = {}
+    insert_iterations = {}
 
     for i in range(n):
         start = timer()
 
         key = 1
-        tree.insert(key)
+        iterations = tree.insert(key)
         end = timer()
         insert_result[i] = end - start
 
-        start = timer()
-        tree.get(key)
-        end = timer()
-        search_result[i] = end - start
+        # start = timer()
+        # tree.get(key)
+        # end = timer()
+        # search_result[i] = end - start
 
-    # plot_results(insert_result)
-    plot_results(search_result)
+        insert_iterations[i] = iterations
+
+    plot_results(insert_result)
+    plot_results(insert_iterations)
+    #plot_results(search_result)
     
 
 
 def test_bst_flag():
-    n = 100000
+    n = 30000000
 
     tree = BST_FLAG()
 
     insert_result = {}
+    insert_iterations = {}
     search_result = {}
 
     for i in range(n):
         start = timer()
 
         key = 1
-        tree.insert(key)
+        iterations = tree.insert(key)
         end = timer()
         insert_result[i] = end - start
+        insert_iterations[i] = iterations
 
-        start = timer()
-        tree.get(key)
-        end = timer()
-        search_result[i] = end - start
-
-
-
-    #plot_tree(tree)
-    #plot_multiple_results(insert_result, search_result)
-    plot_results(insert_result)
-    #plot_results(search_result)
-    
-
-    
+        # start = timer()
+        # tree.get(key)
+        # end = timer()
+        # search_result[i] = end - start
 
 
-    
-def plot_multiple_results(results_1, results_2):
-    x = list(results_1.keys())
-    y1 = list(results_1.values())
-    y2 = list(results_2.values())
 
-    plt.plot(x, y1, label="1")
-    plt.plot(x, y2, label="2")
-    plt.legend()
+  
+    plot_results(insert_iterations)
+    plot_bst_flag_insertion_results(insert_result)
+
+
+
+def plot_bst_flag_insertion_results(result):
+    x = list(result.keys())
+    y = list(result.values())
+
+    plt.plot(x, y, 'o', color='blue', markersize=2.5)
+
+    plt.ylim(0, 0.01)
+
+    plt.savefig("outputs/test_bst_flag_insertion.png")
     plt.show()
 
 
 def plot_results(result):
-  
     x = list(result.keys())
     y = list(result.values())
 
+    plt.plot(x, y, 'o', color='blue', markersize=2.5)
 
-    plt.plot(x, y, marker='o')
+    plt.savefig("outputs/test_bst_flag_insertion.png")
     plt.show()
+  
 
 
-
-def test_tree_visualization():
-    tree = BST()   
-
-    tree.insert(12)
-    tree.insert(1)
-    tree.insert(3)
-    tree.insert(17)
-    tree.insert(11)
-    tree.insert(10)
-    tree.insert(15)
-    tree.insert(17)
-    tree.insert(15)
-    tree.insert(16)
-    tree.insert(18)
-    tree.insert(17)
-    tree.insert(16.5)
-
-    nodes = tree.get(17)
- 
-    print([node.key for node in nodes])
-    
-    plot_tree(tree)
- 
 
 
 
 def main():
-    #test_tree_visualization()
     #test_insertion()
-    #test_bst_flag()
+    test_bst_flag()
+    #save_results()
 
-
-
-
-    tree = BST()   
-
-    tree.insert(12)
-    tree.insert(1)
-    tree.insert(3)
-    tree.insert(17)
-    tree.insert(11)
-    tree.insert(0)
-    tree.insert(3)
-    tree.insert(20)
-
-    plot_tree(tree)
 
 if __name__ == "__main__":
    main()
