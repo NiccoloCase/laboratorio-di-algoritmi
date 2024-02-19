@@ -1,17 +1,22 @@
 import matplotlib.pyplot as plt
 
-def plot_tree(tree):
+def plot_tree(tree, filename=None):
     """
     Disegna un Albero Binario di Ricerca.
 
     Parameters:
     - tree (BST): L'albero da disegnare.
+    - filename (str): Nome del file in cui salvare il plot.
     """
 
     fig, ax = plt.subplots()
     _plot_tree(ax, tree.root, x=0, y=0, level=1)
     ax.axis('off') # Nasconde gli assi
-    plt.show()
+
+    if filename:
+        plt.savefig(filename, format='png', dpi=300)
+        plt.close()
+    else: plt.show()
 
 
 # Funzione ricorsiva per disegnare i nodi dell'albero
@@ -40,7 +45,7 @@ def _plot_tree(ax, node, x, y, level):
 
 
 
-def plot_list_tree(tree):
+def plot_list_tree(tree, filename=None):
 
     """
     Disegna un Albero Binario di Ricerca con Lista concatenata per chiavi duplicate.
@@ -48,12 +53,18 @@ def plot_list_tree(tree):
 
     Parameters:
     - tree (BST): L'albero da disegnare.
+    - filename (str): Nome del file in cui salvare il plot.
     """
 
     fig, ax = plt.subplots()
     _plot_list_tree(ax, tree.root, x=0, y=0, level=1)
     ax.axis('off')
-    plt.show()
+
+    if filename:
+        plt.savefig(filename, format='png', dpi=300)
+        plt.close()
+    else: plt.show()
+
 
 def _plot_list_tree(ax, node, x, y, level):
     if node is not None:

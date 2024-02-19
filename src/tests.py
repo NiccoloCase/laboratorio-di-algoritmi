@@ -52,6 +52,10 @@ def run_tree_test(TreeClass, name, N=10000):
 def plot_saved_results(names):
     """
     Esegue il plot dei risultati salvati in precedenza.
+    Disegna: 
+        - singolarmente le prestazioni dell'inserimento 
+        - singolarmente le iterazioni dell'inserimento
+        - tutti i risultati dell'inserimento insieme
 
     Parameters:
     - names (list): Lista contenente i nomi dei test da plottare.
@@ -146,9 +150,9 @@ def plot_results(result, title, filename,  xLabel, yLabel, zoom=True):
 
     # Salva l'immagine
     source = "./outputs/" + filename
-    #plt.savefig(source)
+    plt.savefig(source)
 
-    plt.show()
+    plt.close()
 
 
 
