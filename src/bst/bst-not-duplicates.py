@@ -1,3 +1,7 @@
+# Implementazione di un albero binario di ricerca (BST) senza duplicati
+# (Serve per la relazione)
+
+
 class Node:
     def __init__(self, key):
         self.key = key

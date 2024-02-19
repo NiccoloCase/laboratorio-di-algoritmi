@@ -14,6 +14,8 @@ class BST_LIST:
         self.root = None
         # Contatore interazioni per l'inserimento (per eseguire i test)
         self.insert_iterations_count = 0
+        # Contatore interazioni per la ricerca (per eseguire i test)
+        self.find_iterations_count = 0
 
     # Imposta la radice dell'albero
     def setRoot(self, key):
@@ -52,35 +54,30 @@ class BST_LIST:
                 currentNode.right = Node(key)
 
     # Restituisce un nodo nell'albero
-    # Restituisce True se lo trova, False altrimenti
     def get(self, key):
         found_nodes = []
-        iterations_counter = [0]  # Utilizziamo una lista per passare il riferimento al contatore
-        self._getNode(self.root, found_nodes, key, iterations_counter)
-        print("Iterazioni: ", iterations_counter[0])
-        return found_nodes
+        self.find_iterations_count = 0
+        self._getNode(self.root, found_nodes, key)
+        return found_nodes, self.find_iterations_count
 
     # Funzione ricorsiva di supporto per la ricerca di un nodo
-    def _getNode(self, currentNode, found_nodes,  key, iterations_counter):
-        if (currentNode is None):
-            return
-        
-        iterations_counter[0] += 1
-
+    def _getNode(self, currentNode, found_nodes,  key):
+        if (currentNode is None): return
+        self.find_iterations_count += 1
         if (key == currentNode.key):
-            found_nodes.append(currentNode)
-            
-            # Abbiamo trovato il nodo, ma dobbiamo continuare la ricerca nel sottoalbero sinistro
-            # per cercare eventuali nodi con lo stesso valore
+            self.find_iterations_count -= 1
+            # Scorriamo la lista dei duplicati
+            while(currentNode is not None):
+                found_nodes.append(currentNode)
+                currentNode = currentNode.next
+                self.find_iterations_count += 1
 
-            if (currentNode.left is not None):
-                self._getNode(currentNode.left, found_nodes, key, iterations_counter)
-
-
-        elif (key < currentNode.key):
-            return self._getNode(currentNode.left, found_nodes, key, iterations_counter)
+        elif (key < currentNode.key): 
+            return self._getNode(currentNode.left, found_nodes, key)
         else:
-            return self._getNode(currentNode.right, found_nodes, key, iterations_counter)   
+            return self._getNode(currentNode.right, found_nodes, key)  
+
+         
                      
     # Cerca un nodo nell'albero
     # Restituisce True se lo trova, False altrimenti

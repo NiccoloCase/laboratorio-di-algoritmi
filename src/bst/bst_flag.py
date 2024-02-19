@@ -17,6 +17,7 @@ class BST_FLAG:
     def __init__(self):
         self.root = None
         self.insert_iterations_count = 0
+        self.find_iterations_count = 0
 
 
     # Imposta la radice dell'albero
@@ -53,7 +54,33 @@ class BST_FLAG:
     def _insert_right(self, currentNode, key):
         if (currentNode.right): self._insertNode(currentNode.right, key)
         else: currentNode.right = Node(key)
-                
+
+    # Restituisce un nodo nell'albero
+    def get(self, key):
+        found_nodes = []
+        self.find_iterations_count = 0
+        self._getNode(self.root, found_nodes, key)
+        return found_nodes, self.find_iterations_count
+
+    # Funzione ricorsiva di supporto per la ricerca di un nodo
+    def _getNode(self, currentNode, found_nodes,  key):
+        if (currentNode is None): return
+        self.find_iterations_count += 1
+        if (key == currentNode.key):
+            found_nodes.append(currentNode)
+            # Abbiamo trovato il nodo, ma dobbiamo continuare la ricerca nel sottoalbero sinistro
+            # per cercare eventuali nodi con lo stesso valore
+            if (currentNode.left is not None):
+                self._getNode(currentNode.left, found_nodes, key)
+            # Continuamo la ricerca anche sottoalbero destro
+            if (currentNode.right is not None):
+                self._getNode(currentNode.right, found_nodes, key)
+
+        elif (key < currentNode.key): 
+            return self._getNode(currentNode.left, found_nodes, key)
+        else:
+            return self._getNode(currentNode.right, found_nodes, key)  
+
     # Cerca un nodo nell'albero
     # Restituisce True se lo trova, False altrimenti
     def find(self, key):
@@ -82,33 +109,3 @@ class BST_FLAG:
                 _inorder(v.right)
                 
         _inorder(self.root)
-
-
-    def get(self, key):
-        found_nodes = []
-        iterations_counter = [0]  # Utilizziamo una lista per passare il riferimento al contatore
-        self._getNode(self.root, found_nodes, key, iterations_counter)
-        print("Iterazioni: ", iterations_counter[0])
-        return found_nodes
-
-    # Funzione ricorsiva di supporto per la ricerca di un nodo
-    def _getNode(self, currentNode, found_nodes,  key, iterations_counter):
-        if (currentNode is None):
-            return
-        
-        iterations_counter[0] += 1
-
-        if (key == currentNode.key):
-            found_nodes.append(currentNode)
-            
-            # Abbiamo trovato il nodo, ma dobbiamo continuare la ricerca nel sottoalbero sinistro
-            # per cercare eventuali nodi con lo stesso valore
-
-            if (currentNode.left is not None):
-                self._getNode(currentNode.left, found_nodes, key, iterations_counter)
-
-
-        elif (key < currentNode.key):
-            return self._getNode(currentNode.left, found_nodes, key, iterations_counter)
-        else:
-            return self._getNode(currentNode.right, found_nodes, key, iterations_counter)   

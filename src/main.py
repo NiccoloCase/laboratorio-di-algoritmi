@@ -1,15 +1,72 @@
 from bst.bst import BST
 from bst.bst_flag import BST_FLAG
 from bst.bst_list import BST_LIST
-from plot_tree import plot_tree
 from timeit import default_timer as timer
 import sys
-from tests import run_tree_test, plot_saved_results
+from tests import run_tree_test, plot_saved_results, plot_results
+from plot_tree import plot_tree, plot_list_tree
 
 sys.setrecursionlimit(500000000)
 
 
+def test_search_bst():
+    tree = BST_LIST()
+    results ={}
+    iterations = {}
+     
+    for i in range(20000):
+        tree.insert(1)
+
+
+        start = timer()
+        x, iteractionsCount = tree.get(1)
+        end = timer()
+
+        results[i] = end - start
+        iterations[i] = iteractionsCount
+
+
+        print("Numero risultati: ", len(x))
+
+
+
+
+    plot_results(results, "BST", "ricerca", "x", False)
+    plot_results(iterations, "BST", "ricerca", "x", True)
+    
+
+    def search():
+        tree = BST_LIST()
+        tree.insert(5)
+        tree.insert(3)
+        tree.insert(7)
+        tree.insert(2)
+        tree.insert(2)
+        tree.insert(2)
+        tree.insert(2)
+        tree.insert(3)
+        tree.insert(3)
+
+        foundNodes, iterations = tree.get(2)
+
+        print("Risultati: ")
+        for i in foundNodes:
+            print(i.key)
+
+        print("Iterazioni: ", iterations)
+
+        plot_list_tree(tree)
+
+
+
 def main():
+
+   # test_search_bst()
+
+
+
+
+    #test_search_bst()
     #test_bst_list()
     #test_bst_flag()
     #save_results()
