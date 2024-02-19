@@ -1,5 +1,6 @@
 from bst import BST
 from bst_flag import BST_FLAG
+from bst_list import BST_LIST
 from plot_tree import plot_tree
 from timeit import default_timer as timer
 import sys
@@ -16,7 +17,7 @@ def random_key(max=20):
     
 
 def test_bst():
-    n = 100000
+    n = 5000
 
     tree = BST()
 
@@ -39,6 +40,7 @@ def test_bst():
 
         insert_iterations[i] = iterations
 
+    #plot_tree(tree)
     plot_results(insert_result)
     plot_results(insert_iterations)
     #plot_results(search_result)
@@ -46,7 +48,7 @@ def test_bst():
 
 
 def test_bst_flag():
-    n = 30000000
+    n = 10000
 
     tree = BST_FLAG()
 
@@ -70,15 +72,53 @@ def test_bst_flag():
 
 
 
-  
+    #plot_tree(tree)
     plot_results(insert_iterations)
     plot_bst_flag_insertion_results(insert_result)
+
+
+
+
+
+
+def test_bst_list():
+    n = 5000
+
+    tree = BST_LIST()
+
+    insert_result = {}
+    search_result = {}
+    insert_iterations = {}
+
+    for i in range(n):
+        start = timer()
+
+        key = 1
+        iterations = tree.insert(key)
+        end = timer()
+        insert_result[i] = end - start
+
+        # start = timer()
+        # tree.get(key)
+        # end = timer()
+        # search_result[i] = end - start
+
+        insert_iterations[i] = iterations
+
+    #plot_tree(tree)
+    plot_results(insert_result)
+    plot_results(insert_iterations)
+    #plot_results(search_result)
+    
+
+
 
 
 
 def plot_bst_flag_insertion_results(result):
     x = list(result.keys())
     y = list(result.values())
+
 
     plt.plot(x, y, 'o', color='blue', markersize=2.5)
 
@@ -103,8 +143,8 @@ def plot_results(result):
 
 
 def main():
-    #test_insertion()
-    test_bst_flag()
+    test_bst_list()
+    #test_bst_flag()
     #save_results()
 
 
