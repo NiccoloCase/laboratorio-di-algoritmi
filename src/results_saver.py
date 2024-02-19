@@ -12,7 +12,7 @@ def save_results(results, name):
     df = pd.DataFrame(payload) 
     timestamp = pd.Timestamp.now()
     filename = name + "_" + timestamp.strftime("%Y-%m-%d_%H-%M-%S")
-    src = "./outputs/" + filename + '.xlsx'
+    src = "../outputs/" + filename + '.xlsx'
     df.to_excel(src, index=False)
 
 

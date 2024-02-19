@@ -1,6 +1,6 @@
-from bst import BST
-from bst_flag import BST_FLAG
-from bst_list import BST_LIST
+from bst.bst import BST
+from bst.bst_flag import BST_FLAG
+from bst.bst_list import BST_LIST
 from plot_tree import plot_tree
 from timeit import default_timer as timer
 import sys
@@ -124,7 +124,7 @@ def plot_bst_flag_insertion_results(result):
 
     plt.ylim(0, 0.01)
 
-    plt.savefig("outputs/test_bst_flag_insertion.png")
+    plt.savefig("../outputs/test_bst_flag_insertion.png")
     plt.show()
 
 

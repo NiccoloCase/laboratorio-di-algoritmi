@@ -1,6 +1,6 @@
-from bst import BST
-from bst_flag import BST_FLAG
-from bst_list import BST_LIST
+from bst.bst import BST
+from bst.bst_flag import BST_FLAG
+from bst.bst_list import BST_LIST
 from plot_tree import plot_tree, plot_list_tree
 
 
