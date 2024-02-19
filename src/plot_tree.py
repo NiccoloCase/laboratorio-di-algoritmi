@@ -90,3 +90,6 @@ def _plot_list_tree(ax, node, x, y, level):
         x_new = x + xfactor ** level
         ax.plot([x, x_new], [y, y_new],  linewidth=.8, color="#404040")
         _plot_list_tree(ax, node.right, x_new, y_new, level + 1)
+
+
+

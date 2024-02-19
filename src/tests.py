@@ -3,7 +3,7 @@ from timeit import default_timer as timer
 import matplotlib.pyplot as plt
 from saver import save_results, load_results
 
-def run_tree_test(TreeClass, name, N=10000):
+def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
     """
     Esegue i test su una classe di albero.
 
@@ -16,36 +16,61 @@ def run_tree_test(TreeClass, name, N=10000):
     # -----------------------------------------------------------
     # CONFIGURAZIONE TEST
     key = 1 # Chiave da inserire
-    n = N # Numero di chiavi da inserire
+    insertion_n = insertionN # Numero di chiavi da inserire
+    search_n = searchN # Numero di chiavi da cercare
     maxRecords = 100000 # Massimo numero di records da salvare
     # ----------------------------------------------------------
 
     tree = TreeClass()
     insert_result = {}
     insert_iterations_result = {}
+    search_result = {}
 
     # Evita di salvare troppi risultati
-    step =  1 if n <= maxRecords else  n // maxRecords # Calcola il passo con cui salvare i risultati
-    savedCount = 0   # Tiene traccia del passo corrente
+    step_insertion =  1 if insertion_n <= maxRecords else  insertion_n // maxRecords # Calcola il passo con cui salvare i risultati
+    savedCountInsertion = 0   # Tiene traccia del passo corrente
 
-    for i in range(n):
-        start = timer()
-        iterations = tree.insert(key)
-        end = timer()
+    step_search =  1 if search_n <= maxRecords else  search_n // maxRecords 
+    savedCountSearch = 0
+
+
+    for i in range(max(insertion_n, search_n) + 1):
+        # Testa l'inserimento
+        if i < insertion_n:
+            insert_start = timer()
+            insert_iterations = tree.insert(key)
+            insert_end = timer()
+
+        # Testa la ricerca
+        if i < search_n:
+            search_start = timer()
+            tree.get(key)
+            search_end = timer()
 
         # Salva i risultati solo se i è multiplo di step
-        if i == savedCount * step:
-            savedCount += 1
-            insert_result[i] = end - start
-            insert_iterations_result[i] = iterations
+        if i == savedCountInsertion * step_insertion and i < insertion_n:
+            savedCountInsertion += 1
+            insert_result[i] = insert_end - insert_start
+            insert_iterations_result[i] = insert_iterations
+
+        if i == savedCountSearch * step_search and i < search_n:
+            savedCountSearch += 1
+            search_result[i] = search_end - search_start
            
 
     # Salva i risultati dell'inserimento in un file excel
     insertion_filename = get_insertion_filename(name)
     save_results(insert_result, insertion_filename)
+
     # Salva i risultati delle iterazioni dell'inserimento in un file excel
     insertion_iterations_filename = get_insertion_iterations_filename(name)
     save_results(insert_iterations_result, insertion_iterations_filename)
+
+    # Salva i risultati della ricerca in un file excel
+    find_filename = get_search_filename(name)
+    save_results(search_result, find_filename)
+
+    
    
         
 
@@ -56,6 +81,7 @@ def plot_saved_results(names):
         - singolarmente le prestazioni dell'inserimento 
         - singolarmente le iterazioni dell'inserimento
         - tutti i risultati dell'inserimento insieme
+        - singolarmente le prestazioni della ricerca
 
     Parameters:
     - names (list): Lista contenente i nomi dei test da plottare.
@@ -63,19 +89,24 @@ def plot_saved_results(names):
     
     tests = {
         "insertion": {},
-        "insertion_iterations": {}
+        "insertion_iterations": {},
+        "search": {}
     }
 
     # Carica tutti i risultati 
     for name in names:
         insertion_results = load_results( get_insertion_filename(name))
         insertion_iterations = load_results(get_insertion_iterations_filename(name))
+        search_results = load_results(get_search_filename(name))
 
         if insertion_results != None:
             tests["insertion"][name] = insertion_results
 
         if insertion_iterations != None:
             tests["insertion_iterations"][name] = insertion_iterations
+
+        if search_results != None:
+            tests["search"][name] = search_results
     
 
     # Plotta i risultati dell'inserimento singolarmente 
@@ -94,6 +125,13 @@ def plot_saved_results(names):
     for name in tests["insertion_iterations"].keys():
         if tests["insertion_iterations"][name] != None:
             plot_results(tests["insertion_iterations"][name], "Iterazioni nell'inserimento in un " + name, get_insertion_iterations_filename(name), "Dimensione dell'albero", "Numero di iterazioni")
+        else:
+            print("Nessun risultato per " + name)
+    
+    # Plotta i risultati della ricerca singolarmente    
+    for name in tests["search"].keys():
+        if tests["search"][name] != None:
+            plot_results(tests["search"][name], "Ricerca in un " + name, get_search_filename(name), "Dimensione dell'albero", "Tempo di ricerca (s)", False)
         else:
             print("Nessun risultato per " + name)
 
@@ -119,6 +157,15 @@ def get_insertion_iterations_filename(name):
     name = name.lower().replace(" ", "_")
     return name + "_insertion_iterations"
 
+def get_search_filename(name):
+    """
+    Restituisce il nome del file excel in cui salvare i risultati della ricerca.
+
+    Parameters:
+    - name (dict): Nome del test.
+    """
+    name = name.lower().replace(" ", "_")
+    return name + "_search"
 
 
 def plot_results(result, title, filename,  xLabel, yLabel, zoom=True):

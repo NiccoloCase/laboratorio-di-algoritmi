@@ -29,7 +29,6 @@ class BST_FLAG:
         self.insert_iterations_count = 0
         if (self.root is None): self.setRoot(key)
         else: self._insertNode(self.root, key)
-        print("Iterazioni per inserimento: ", self.insert_iterations_count)
         return self.insert_iterations_count
 
     # Funzione di supporto per l'inserimento di un nodo
