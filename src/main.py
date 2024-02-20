@@ -6,6 +6,9 @@ import sys
 from tests import run_tree_test, plot_saved_results, plot_results
 from plot_tree import plot_tree, plot_list_tree
 from saver import summarise_file
+from progressbar import ProgressBar
+from time import sleep
+
 
 sys.setrecursionlimit(500000000)
 
@@ -62,15 +65,11 @@ def test_search_bst():
 
 def main():
 
-
-
-
-
     run_tree_test(BST, "BST", 10000, 10000)
     run_tree_test(BST_FLAG, "BST FLAG", 1000000, 10000)
     run_tree_test(BST_LIST, "BST LIST", 1000000, 10000)
     
-    plot_saved_results(["BST", "BST FLAG", "BST LIST"])
+    # plot_saved_results(["BST", "BST FLAG", "BST LIST"])
 
 
 

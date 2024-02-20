@@ -2,6 +2,7 @@ from plot_tree import plot_tree
 from timeit import default_timer as timer
 import matplotlib.pyplot as plt
 from saver import save_results, load_results
+from progressbar import ProgressBar
 
 def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
     """
@@ -34,7 +35,20 @@ def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
     savedCountSearch = 0
 
 
-    for i in range(max(insertion_n, search_n) + 1):
+    N = max(insertion_n, search_n)+1
+
+    
+    # Print
+    print("INIZIO TEST SU " + name.upper() + " (N=" + str(N) + ")")
+    
+    # Barra di progresso
+    progress_bar = ProgressBar(N)
+
+
+
+    for i in range(N):
+
+
         # Testa l'inserimento
         if i < insertion_n:
             insert_start = timer()
@@ -56,6 +70,10 @@ def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
         if i == savedCountSearch * step_search and i < search_n:
             savedCountSearch += 1
             search_result[i] = search_end - search_start
+
+
+        # Aggiorna la barra di progresso
+        progress_bar.update(i)
            
 
     # Salva i risultati dell'inserimento in un file excel
