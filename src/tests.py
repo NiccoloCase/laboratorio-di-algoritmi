@@ -145,7 +145,7 @@ def get_insertion_filename(name):
     - name (dict): Nome del test.
     """
     name = name.lower().replace(" ", "_")
-    return name + "_insertion"
+    return name + "/insertion"
 
 def get_insertion_iterations_filename(name):
     """
@@ -155,7 +155,7 @@ def get_insertion_iterations_filename(name):
     - name (dict): Nome del test.
     """
     name = name.lower().replace(" ", "_")
-    return name + "_insertion_iterations"
+    return name + "/insertion_iterations"
 
 def get_search_filename(name):
     """
@@ -165,7 +165,7 @@ def get_search_filename(name):
     - name (dict): Nome del test.
     """
     name = name.lower().replace(" ", "_")
-    return name + "_search"
+    return name + "/search"
 
 
 def plot_results(result, title, filename,  xLabel, yLabel, zoom=True):

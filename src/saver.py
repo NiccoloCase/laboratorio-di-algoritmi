@@ -1,5 +1,6 @@
 import pandas as pd
 import math
+import os
 
 def save_results(results, filename): 
     """
@@ -26,6 +27,14 @@ def save_results(results, filename):
     df = pd.DataFrame(payload) 
 
     src = "./outputs/" + filename + '.xlsx'
+
+
+
+    fileDirectory = os.path.dirname(src)
+
+    if not os.path.exists(fileDirectory):
+        os.makedirs(fileDirectory)
+
     df.to_excel(src, index=False)
 
     # Genera una copia riassunta del file
@@ -43,9 +52,10 @@ def load_results(filename):
     Returns: Il dizionario contenente i risultati dei test.
     """
     
-    src = "./outputs/" + filename + '.xlsx'
+    fileSrc = "./outputs/" + filename + '.xlsx'
+
     try:
-        df = pd.read_excel(src)
+        df = pd.read_excel(fileSrc)
     except FileNotFoundError:
         print(f"File '{filename}.xlsx' non trovato.")
         return None
@@ -105,8 +115,6 @@ def summarise_file(fileSource):
     newFileSource = fileSource.replace(".xlsx", "_summarised.xlsx")
     print(f"Salvo il file riassunto in '{newFileSource}'...")
     df.to_excel(newFileSource, index=False)
-
-
 
 
 
