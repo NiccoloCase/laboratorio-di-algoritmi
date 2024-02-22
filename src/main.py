@@ -65,9 +65,9 @@ def test_search_bst():
 
 def main():
 
-    run_tree_test(BST, "BST", 10000, 10000)
+    # run_tree_test(BST, "BST", 10000, 10000)
     run_tree_test(BST_FLAG, "BST FLAG", 1000000, 10000)
-    run_tree_test(BST_LIST, "BST LIST", 1000000, 10000)
+    # run_tree_test(BST_LIST, "BST LIST", 1000000, 10000)
     
     # plot_saved_results(["BST", "BST FLAG", "BST LIST"])
 

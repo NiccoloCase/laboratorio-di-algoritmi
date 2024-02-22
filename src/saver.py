@@ -105,25 +105,34 @@ def summarise_file(fileSource):
     rows.sort()
     df = df.iloc[rows] # Aggiorna il dataframe
 
-    # Formatta i valori prendendo solo le prime 2 cifre significative
+
+    # Creazione di un nuovo DataFrame con solo due colonne
+    df_summarised = df[['n', 'time']]
+
+
+    # Formatta i valori
     for column in df.columns:
         if df[column].dtype == "float64":
-            df[column] = df[column].apply(lambda x: truncate_number(x, 3))
+            df_summarised[column] = df_summarised[column].apply(lambda x: format(x, 2))
   
 
+    # Cambia il nome delle colonne
+    df_summarised.columns =["Numero di elementi", "Tempo di esecuzione (s)"]
+
+
     # Salva il file
-    newFileSource = fileSource.replace(".xlsx", "_summarised.xlsx")
+    newFileSource = fileSource.replace(".xlsx", "_summarised.cvs")
     print(f"Salvo il file riassunto in '{newFileSource}'...")
-    df.to_excel(newFileSource, index=False)
+    df_summarised.to_csv(newFileSource, index=False)
 
 
 
-def truncate_number(number, significant_digits):
-    if number == 0: return 0
-    # Log10 del numero
-    log10_number = abs(number) and math.log10(abs(number))
-    # Calcola la potenza di 10
-    power_of_10 = significant_digits - 1 - int(log10_number)
-    # Tronca il numero
-    truncated_number = round(number * 10 ** power_of_10) / (10 ** power_of_10)
-    return truncated_number
+
+# Converte il numero in notazione scientifica con il numero di cifre significative specificato
+def format(numero, significant_digits=6):
+    formato_stringa = "{:." + str(significant_digits) + "e}"
+    numero_in_notazione_scientifica = formato_stringa.format(numero)
+    return numero_in_notazione_scientifica
+
+
+
