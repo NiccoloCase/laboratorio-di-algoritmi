@@ -44,7 +44,7 @@ def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
     # Barra di progresso
     progress_bar = ProgressBar(N)
 
-
+    testStart = timer()
 
     for i in range(N):
 
@@ -74,6 +74,10 @@ def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
 
         # Aggiorna la barra di progresso
         progress_bar.update(i)
+
+    # Print
+    print("FINE TEST SU " + name.upper() + " (N=" + str(N) + ")")
+    print("Tempo totale: ", timer() - testStart)
            
 
     # Salva i risultati dell'inserimento in un file excel

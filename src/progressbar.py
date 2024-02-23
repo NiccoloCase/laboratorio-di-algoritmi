@@ -2,6 +2,9 @@ import sys
 import time
 from typing import Optional
 
+
+# CLASSE ProgressBar
+# Crea una barra di stato per monitorare l'avanzamento dei test
 class ProgressBar:
     def __init__(self, max_value: float = 100.0):
         self.max_value = max_value
