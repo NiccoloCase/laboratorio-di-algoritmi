@@ -263,6 +263,7 @@ def plot_muliple_results(results, title, filename, xLabel, yLabel):
     plt.ylim(0, mean * 2)
 
 
+
     # Salva l'immagine
     source = "./outputs/" + filename
     plt.savefig(source)

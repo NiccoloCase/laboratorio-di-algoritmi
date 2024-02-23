@@ -65,12 +65,13 @@ def test_search_bst():
 
 def main():
 
-    # run_tree_test(BST, "BST", 200000, 1000)
+   # run_tree_test(BST, "BST", 200000, 1000)
     # run_tree_test(BST_FLAG, "BST FLAG", 1000000, 1000)
     # run_tree_test(BST_LIST, "BST LIST", 1000000, 1000)
     
     plot_saved_results(["BST", "BST FLAG", "BST LIST"])
 
+    
 
 
 if __name__ == "__main__":
