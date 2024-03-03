@@ -1,6 +1,6 @@
 import pandas as pd
-import math
 import os
+from shared import get_insertion_filename, get_insertion_iterations_filename, get_search_filename
 
 def save_results(results, filename): 
     """
@@ -27,7 +27,6 @@ def save_results(results, filename):
     df = pd.DataFrame(payload) 
 
     src = "./outputs/" + filename + '.xlsx'
-
 
 
     fileDirectory = os.path.dirname(src)
@@ -71,11 +70,15 @@ def load_results(filename):
     return results
 
 
+
+
+
+
+
 def summarise_file(fileSource):
     """
     Funzione che dato il percorso di un file excel, genera una copia con solo un numero
-    limitato di righe significative.
-
+    limitato di righe significative. Genera un file con estensione .cvs per imporarlo in latex
 
     Parameters:
     - fileSource (str): Percorso del file excel da riassumere.
@@ -129,10 +132,51 @@ def summarise_file(fileSource):
 
 
 # Converte il numero in notazione scientifica con il numero di cifre significative specificato
-def format(numero, significant_digits=6):
-    formato_stringa = "{:." + str(significant_digits) + "e}"
-    numero_in_notazione_scientifica = formato_stringa.format(numero)
-    return numero_in_notazione_scientifica
+def format(numberString, significant_digits=6):
+    myNumber = numberString
+    # Controlla che il numero sia un numero  
+    if not isinstance(numberString, (int, float)):
+        # Se non è un numero, prova a convertirlo
+        try:
+            myNumber = float(numberString)
+        except:
+            return numberString
+
+    stringNumber = "{:." + str(significant_digits) + "e}"
+    return stringNumber.format(myNumber)
 
 
 
+def create_joined_file():
+    """
+    Funzione che genera per i tre tipi di alberi binari di ricerca, un file excel con i risultati combinati di ricerca e inserimento
+    """
+
+    for tree in ["BST", "BST_FLAG", "BST_LIST"]:
+        bst_insertion = load_results(get_insertion_filename(tree))
+        bst_insertion_iterations = load_results(get_insertion_iterations_filename(tree))
+        bst_search = load_results(get_search_filename(tree))
+
+        # Se gli array non sono dela stessa lunghezza, aggiungi valori nulli
+        max_length = max(len(bst_insertion), len(bst_insertion_iterations), len(bst_search))
+        for results in [bst_insertion, bst_insertion_iterations, bst_search]:
+            if results != None:
+                while len(results) < max_length:
+                    results[max(results.keys()) + 1] = None
+
+        # Formatta i valori in notazione scientifica
+        for results in [bst_insertion, bst_search]:
+            if results != None:
+                for key in results:
+                    results[key] = format(results[key],2)
+        
+        # Salva i risultati in un file excel
+        payload = {
+            'n': list(bst_insertion.keys()),
+            f'Inserimento {tree}': list(bst_insertion.values()),
+            f'Iterazioni inserimento{tree}': list(bst_insertion_iterations.values()),
+            f'Ricerca {tree}': list(bst_search.values())
+        }
+
+        df = pd.DataFrame(payload)
+        df.to_excel(f"./outputs/risultati_{tree}.xlsx", index=False)

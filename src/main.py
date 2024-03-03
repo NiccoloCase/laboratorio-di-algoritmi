@@ -5,7 +5,7 @@ from timeit import default_timer as timer
 import sys
 from tests import run_tree_test, plot_saved_results, plot_results
 from plot_tree import plot_tree, plot_list_tree
-from saver import summarise_file
+from saver import summarise_file,create_joined_file
 from progressbar import ProgressBar
 from time import sleep
 
@@ -13,65 +13,25 @@ from time import sleep
 sys.setrecursionlimit(500000000)
 
 
-def test_search_bst():
-    tree = BST_LIST()
-    results ={}
-    iterations = {}
-     
-    for i in range(20000):
-        tree.insert(1)
 
+# Valori con cui ho eseguito i test:
+# BST_INSERTION_N = 200000
+# BST_FLAG_INSERTION_N = 1000000
+# BST_LIST_INSERTION_N = 1000000
+# SEARCH_N = 1000
 
-        start = timer()
-        x, iteractionsCount = tree.get(1)
-        end = timer()
-
-        results[i] = end - start
-        iterations[i] = iteractionsCount
-
-
-        print("Numero risultati: ", len(x))
-
-
-
-
-    plot_results(results, "BST", "ricerca", "x", False)
-    plot_results(iterations, "BST", "ricerca", "x", True)
-    
-
-    def search():
-        tree = BST_LIST()
-        tree.insert(5)
-        tree.insert(3)
-        tree.insert(7)
-        tree.insert(2)
-        tree.insert(2)
-        tree.insert(2)
-        tree.insert(2)
-        tree.insert(3)
-        tree.insert(3)
-
-        foundNodes, iterations = tree.get(2)
-
-        print("Risultati: ")
-        for i in foundNodes:
-            print(i.key)
-
-        print("Iterazioni: ", iterations)
-
-        plot_list_tree(tree)
-
-
+BST_INSERTION_N = 200000
+BST_FLAG_INSERTION_N = 1000000
+BST_LIST_INSERTION_N = 1000000
+SEARCH_N = 1000
 
 def main():
-
-   # run_tree_test(BST, "BST", 200000, 1000)
-    # run_tree_test(BST_FLAG, "BST FLAG", 1000000, 1000)
-    # run_tree_test(BST_LIST, "BST LIST", 1000000, 1000)
+   # run_tree_test(BST, "BST", BST_INSERTION_N, SEARCH_N)
+    # run_tree_test(BST_FLAG, "BST FLAG", BST_FLAG_INSERTION_N, SEARCH_N)
+    # run_tree_test(BST_LIST, "BST LIST", BST_LIST_INSERTION_N, SEARCH_N)
     
-    plot_saved_results(["BST", "BST FLAG", "BST LIST"])
-
-    
+    #plot_saved_results(["BST", "BST FLAG", "BST LIST"])
+   create_joined_file()
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ from timeit import default_timer as timer
 import matplotlib.pyplot as plt
 from saver import save_results, load_results
 from progressbar import ProgressBar
+from shared import get_insertion_filename, get_insertion_iterations_filename, get_search_filename
 
 def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
     """
@@ -158,36 +159,6 @@ def plot_saved_results(names):
             print("Nessun risultato per " + name)
 
 
-
-def get_insertion_filename(name):
-    """
-    Restituisce il nome del file excel in cui salvare i risultati dell'inserimento.
-
-    Parameters:
-    - name (dict): Nome del test.
-    """
-    name = name.lower().replace(" ", "_")
-    return name + "/insertion"
-
-def get_insertion_iterations_filename(name):
-    """
-    Restituisce il nome del file excel in cui salvare la iterazioni dell'inserimento.
-
-    Parameters:
-    - name (dict): Nome del test.
-    """
-    name = name.lower().replace(" ", "_")
-    return name + "/insertion_iterations"
-
-def get_search_filename(name):
-    """
-    Restituisce il nome del file excel in cui salvare i risultati della ricerca.
-
-    Parameters:
-    - name (dict): Nome del test.
-    """
-    name = name.lower().replace(" ", "_")
-    return name + "/search"
 
 
 def plot_results(result, title, filename,  xLabel, yLabel, zoom=True):

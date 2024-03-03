@@ -35,3 +35,15 @@ class BST:
                 self._insertNode(currentNode.right, key)
             else:
                 currentNode.right = Node(key)
+
+
+    def get(self, key):
+        return self._getNode(self.root, key)
+
+    def _getNode(self, currentNode, key):
+        if (currentNode is None): return None
+        if (key == currentNode.key): return currentNode
+        if (key < currentNode.key):
+            return self._getNode(currentNode.left, key)
+        else:
+            return self._getNode(currentNode.right, key)
