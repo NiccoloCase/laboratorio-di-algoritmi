@@ -1,6 +1,7 @@
 ### FILE CHE GENERA LE IMMAGINI DEI VARI ALBERI BINARI DI RICERCA USATE 
 ### PER LA RELAZIONE DI LABORATORIO
 
+import os
 from bst.bst import BST
 from bst.bst_flag import BST_FLAG
 from bst.bst_list import BST_LIST
@@ -99,6 +100,14 @@ def generate_bst_list_img2():
 
 
 def generateAllImgs():
+
+
+    # Controlla se esiste la directory "images", altrimenti la crea
+    if not os.path.exists("images"):
+        os.makedirs("images")
+
+
+    
     generate_generic_bst_img()
     generate_normal_implementation_img_1()
     generate_normal_implementation_img_2()
