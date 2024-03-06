@@ -108,5 +108,3 @@ def generateAllImgs():
     generate_bst_list_img2()
 
 
-if __name__ == "__main__":
-   generateAllImgs()

@@ -1,5 +1,4 @@
 import sys
-import time
 from typing import Optional
 
 
@@ -11,13 +10,9 @@ class ProgressBar:
         self.current_value = 0.0
         self.print_status()
 
-    def update(self, new_value: Optional[float] = None):
-        if new_value is not None:
+    def update(self, new_value):
+        if(new_value):
             self.current_value = min(max(0.0, new_value), self.max_value)
-        else:
-            self.current_value += 20.0  # Incremento predefinito
-            self.current_value = min(self.current_value, self.max_value)
-
         self.print_status()
 
     def complete(self):
@@ -33,15 +28,3 @@ class ProgressBar:
         sys.stdout.write('\rProgress |{}| {}% Complete'.format(bar, progress_percent))
         sys.stdout.flush()
 
-if __name__ == "__main__":
-    progress_bar = ProgressBar()
-
-    # Simula l'avanzamento della barra di stato
-    for _ in range(5):
-        time.sleep(1)
-        progress_bar.update()
-
-    # Completa la barra di stato
-    progress_bar.complete()
-
-    print("\nProcesso completato!")

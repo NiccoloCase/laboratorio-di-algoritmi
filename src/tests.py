@@ -1,4 +1,3 @@
-from plot_tree import plot_tree
 from timeit import default_timer as timer
 import matplotlib.pyplot as plt
 from saver import save_results, load_results
@@ -96,7 +95,6 @@ def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
     
    
         
-
 def plot_saved_results(names):
     """
     Esegue il plot dei risultati salvati in precedenza.
