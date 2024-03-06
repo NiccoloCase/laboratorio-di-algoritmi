@@ -174,7 +174,7 @@ def create_joined_file():
         payload = {
             'n': list(bst_insertion.keys()),
             f'Inserimento {tree}': list(bst_insertion.values()),
-            f'Iterazioni inserimento{tree}': list(bst_insertion_iterations.values()),
+            f'Iterazioni inserimento {tree}': list(bst_insertion_iterations.values()),
             f'Ricerca {tree}': list(bst_search.values())
         }
 
