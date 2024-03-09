@@ -1,10 +1,11 @@
 # ALBERO BINARIO DI RICERCA SENZA ACCORGIMENTI PER CHIAVI DUPLICATE
 
 class Node:
-    def __init__(self, key):
-        self.key = key
+    def __init__(self, key, parent=None):
+        self.key = key 
         self.left = None
         self.right = None
+        self.p = parent
 
 class BST:
     def __init__(self):
@@ -30,12 +31,12 @@ class BST:
             if (currentNode.left):
                 self._insertNode(currentNode.left, key)
             else:
-                currentNode.left = Node(key)
+                currentNode.left = Node(key, currentNode)
         elif (key > currentNode.key):
             if (currentNode.right):
                 self._insertNode(currentNode.right, key)
             else:
-                currentNode.right = Node(key)
+                currentNode.right = Node(key, currentNode)
 
     # Restituisce tutti i nodi con la chiave passata
     def get(self, key):

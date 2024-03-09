@@ -1,16 +1,13 @@
 # ALBERO BINARIO DI RICERCA CON GESTIONE DEI DUPLICATI CON FLAG BOOLEANO
+from bst.bst import Node
 
 
-# NODO DI UN ALBERO BINARIO DI RICERCA
-class Node:
-    def __init__(self, key):
-        self.key = key
-        self.left = None
-        self.right = None
+class NodeFlag(Node):
+    def __init__(self, key, parent=None):
+        super().__init__(key, parent)
         self.flag = False
-
-   
         
+
 
 # ALBERO BINARIO DI RICERCA
 class BST_FLAG:
@@ -22,7 +19,7 @@ class BST_FLAG:
 
     # Imposta la radice dell'albero
     def setRoot(self, key):
-        self.root = Node(key)
+        self.root = NodeFlag(key)
 
     # Inserisce un nodo nell'albero
     def insert(self, key):
@@ -47,12 +44,12 @@ class BST_FLAG:
     # Funzione di supporto per l'inserimento di un nodo a sinistra
     def _insert_left(self, currentNode, key):
         if (currentNode.left): self._insertNode(currentNode.left, key)
-        else: currentNode.left = Node(key)
+        else: currentNode.left = NodeFlag(key, currentNode)
 
     # Funzione di supporto per l'inserimento di un nodo a destra
     def _insert_right(self, currentNode, key):
         if (currentNode.right): self._insertNode(currentNode.right, key)
-        else: currentNode.right = Node(key)
+        else: currentNode.right = NodeFlag(key, currentNode)
 
     # Restituisce un nodo nell'albero
     def get(self, key):

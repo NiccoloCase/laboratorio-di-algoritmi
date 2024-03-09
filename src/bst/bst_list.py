@@ -1,13 +1,13 @@
 # ALBERO BINARIO DI RICERCA CON GESTIONE DEI DUPLICATI CON LISTA CONCATENATA
+from bst.bst import Node
 
-class Node:
-    def __init__(self, key):
-        self.key = key
-        self.left = None
-        self.right = None
-        #### Aggiunta per la gestione dei duplicati con lista
+
+class NodeList(Node):
+    def __init__(self, key, parent=None):
+        super().__init__(key, parent)
         self.next = None
         self.duplicates = 0
+
 
 class BST_LIST:
     def __init__(self):
@@ -19,7 +19,7 @@ class BST_LIST:
 
     # Imposta la radice dell'albero
     def setRoot(self, key):
-        self.root = Node(key)
+        self.root = NodeList(key)
 
     # Inserisce un nodo nell'albero
     def insert(self, key):
@@ -34,9 +34,10 @@ class BST_LIST:
 
         # Gestione con lista concatenata dei duplicati
         if (key == currentNode.key):
-            # Inserisce in testa alla lista e aggiorna il contatore dei duplicati
-            newNode = Node(key)
+            # Inserisce in testa alla lista 
+            newNode = NodeList(key, currentNode)
             newNode.next = currentNode.next
+            if(currentNode.next): currentNode.next.p = newNode
             currentNode.next = newNode
             currentNode.duplicates += 1
 
@@ -45,12 +46,12 @@ class BST_LIST:
             if (currentNode.left):
                 self._insertNode(currentNode.left, key)
             else:
-                currentNode.left = Node(key)
+                currentNode.left = NodeList(key, currentNode)
         elif (key > currentNode.key):
             if (currentNode.right):
                 self._insertNode(currentNode.right, key)
             else:
-                currentNode.right = Node(key)
+                currentNode.right = NodeList(key, currentNode)
 
     # Restituisce un nodo nell'albero
     def get(self, key):

@@ -1,12 +1,13 @@
 # Implementazione di un albero binario di ricerca (BST) senza duplicati
-# (Serve per la relazione)
+# (Non usato, codice solo per la relazione)
 
 
 class Node:
-    def __init__(self, key):
+    def __init__(self, key, parent=None):
         self.key = key
         self.left = None
         self.right = None
+        self.p = parent
 
 class BST:
     def __init__(self):
@@ -29,12 +30,12 @@ class BST:
             if (currentNode.left):
                 self._insertNode(currentNode.left, key)
             else:
-                currentNode.left = Node(key)
+                currentNode.left = Node(key, currentNode)
         elif (key > currentNode.key):
             if (currentNode.right):
                 self._insertNode(currentNode.right, key)
             else:
-                currentNode.right = Node(key)
+                currentNode.right = Node(key, currentNode)
 
 
     def get(self, key):
