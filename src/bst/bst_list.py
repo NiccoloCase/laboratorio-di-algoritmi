@@ -95,7 +95,7 @@ class BST_LIST:
         else:
             return self._findNode(currentNode.right, key)
         
-    # Attreversa l'albero in ordine
+    # Attraversa l'albero in ordine
     def printInorder(self):
         def _inorder(v):
             if(v is None):
