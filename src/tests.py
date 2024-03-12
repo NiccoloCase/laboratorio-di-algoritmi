@@ -42,7 +42,7 @@ def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
     print("INIZIO TEST SU " + name.upper() + " (N=" + str(N) + ")")
     
     # Barra di progresso
-    progress_bar = ProgressBar(N)
+    # progress_bar = ProgressBar(N)
 
     testStart = timer()
 
@@ -73,7 +73,7 @@ def run_tree_test(TreeClass, name, insertionN=10000, searchN=10000):
 
 
         # Aggiorna la barra di progresso
-        progress_bar.update(i)
+        # progress_bar.update(i)
 
     # Print
     print("FINE TEST SU " + name.upper() + " (N=" + str(N) + ")")
